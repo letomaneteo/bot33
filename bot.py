@@ -3,7 +3,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
 # Вставь сюда свой токен
-TOKEN = 'YOUR_BOT_TOKEN'
+TOKEN = '7743943724:AAH93OLyNfOoY_jT6hlf9plQ9MfX54E-zZI'
 
 # Настройка логирования
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
