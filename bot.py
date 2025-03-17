@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 # Инициализация Flask приложения
 app = Flask(__name__)
 
-TOKEN = 'YOUR_BOT_TOKEN'  # Замените на свой токен
+TOKEN = '7743943724:AAH93OLyNfOoY_jT6hlf9plQ9MfX54E-zZI'  # Замените на свой токен
 
 # Команда start
 async def start(update: Update, context: CallbackContext) -> None:
