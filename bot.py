@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackContext
 
-TOKEN = 'YOUR_BOT_TOKEN'  # Замените на свой токен
+TOKEN = '7743943724:AAH93OLyNfOoY_jT6hlf9plQ9MfX54E-zZI'  # Замените на свой токен
 
 async def start(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text('Привет! Я бот.')
