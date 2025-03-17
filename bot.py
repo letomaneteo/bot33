@@ -1,36 +1,21 @@
-import logging
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler
 
-# Вставь сюда свой токен
+# Установите свой токен
 TOKEN = '7743943724:AAH93OLyNfOoY_jT6hlf9plQ9MfX54E-zZI'
 
-# Настройка логирования
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-logger = logging.getLogger(__name__)
+def start(update: Update, context):
+    update.message.reply_text("Привет! Я бот.")
 
-# Функция для обработки команды /start
-def start(update: Update, context: CallbackContext) -> None:
-    user_name = update.message.from_user.first_name
-    update.message.reply_text(f'Привет, {user_name}! Я твой простой бот.')
-
-# Основная функция для запуска бота
-def main() -> None:
-    # Создаем Updater и передаем токен
-    updater = Updater(TOKEN)
-
-    # Получаем диспетчер для обработки команд
+def main():
+    updater = Updater(TOKEN, use_context=True)
+    
     dp = updater.dispatcher
-
-    # Добавляем обработчик команды /start
     dp.add_handler(CommandHandler("start", start))
-
-    # Запускаем бота
+    
     updater.start_polling()
-
-    # Ожидаем завершения работы
     updater.idle()
 
 if __name__ == '__main__':
     main()
+
