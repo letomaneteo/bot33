@@ -13,11 +13,20 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Настройка Firebase
-cred = credentials.Certificate(r"C:\Users\Admin\Downloads\botchoiseimage-firebase-adminsdk-fbsvc-fff457209b.json")
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://botchoiseimage-default-rtdb.europe-west1.firebasedatabase.app/'
-})
+# Получаем строку JSON из переменной окружения
+firebase_credentials_json = os.getenv('FIREBASE_CREDENTIALS')
+
+if firebase_credentials_json:
+    # Преобразуем строку JSON в объект Python
+    firebase_credentials = json.loads(firebase_credentials_json)
+    cred = credentials.Certificate(firebase_credentials)
+    
+    # Инициализация Firebase
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://botchoiseimage-default-rtdb.europe-west1.firebasedatabase.app/'
+    })
+else:
+    print("Ошибка: переменная окружения FIREBASE_CREDENTIALS не найдена.")
 
 def get_images_from_google_sheets():
     url = "https://script.google.com/macros/s/AKfycbw7EQo6pWok4oouMKjkG_pl2uczAJW6-Oc4kC1pYkyFj9ruRRZy1lrRwvxDfE-oMyrn/exec"
