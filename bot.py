@@ -19,14 +19,23 @@ logger = logging.getLogger(__name__)
 firebase_credentials_json = os.getenv('FIREBASE_CREDENTIALS')
 
 if firebase_credentials_json:
-    # Преобразуем строку JSON в объект Python
-    firebase_credentials = json.loads(firebase_credentials_json)
-    cred = credentials.Certificate(firebase_credentials)
-    
-    # Инициализация Firebase
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': 'https://botchoiseimage-default-rtdb.europe-west1.firebasedatabase.app/'
-    })
+    try:
+        # Преобразуем строку JSON в Python-словарь
+        firebase_credentials = json.loads(firebase_credentials_json)
+
+        # Записываем временный JSON-файл (Keyob не поддерживает передачу словаря напрямую)
+        temp_json_path = "/tmp/firebase_credentials.json"
+        with open(temp_json_path, "w") as f:
+            json.dump(firebase_credentials, f)
+
+        # Инициализация Firebase через временный файл
+        cred = credentials.Certificate(temp_json_path)
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': 'https://botchoiseimage-default-rtdb.europe-west1.firebasedatabase.app/'
+        })
+
+    except json.JSONDecodeError:
+        print("Ошибка: FIREBASE_CREDENTIALS содержит некорректный JSON.")
 else:
     print("Ошибка: переменная окружения FIREBASE_CREDENTIALS не найдена.")
 
